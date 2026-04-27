@@ -27,6 +27,9 @@ serve = "cv_job_matching_system.api:serve"
 requires = ["hatchling"]
 build-backend = "hatchling.build"
 
+[tool.hatch.build.targets.wheel]
+packages = ["src/cv_job_matching_system"]
+
 [tool.crewai]
 type = "crew"
 

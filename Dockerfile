@@ -11,16 +11,14 @@ ENV PATH="/root/.local/bin:$PATH"
 
 WORKDIR /app
 
-# Copy dependency files first (layer caching)
+# Copy everything needed for the build
 COPY pyproject.toml uv.lock* ./
-
-# Install deps (no dev extras)
-RUN uv sync --frozen --no-dev
-
-# Copy source
 COPY src/ ./src/
 COPY static/ ./static/
 COPY knowledge/ ./knowledge/
+
+# Install deps (no dev extras)
+RUN uv sync --frozen --no-dev
 
 # Create output dir
 RUN mkdir -p output
