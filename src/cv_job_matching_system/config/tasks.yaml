@@ -1,0 +1,116 @@
+---
+analyze_cv:
+  description: >
+    Analyze the following CV text for {candidate_name} and extract a structured profile.
+
+    CV CONTENT:
+    ---
+    {cv_content}
+    ---
+
+    Extract and structure:
+    - Full name, contact details, location
+    - Total years of experience and seniority level (junior/mid/senior/lead)
+    - Top 5 technical skills and top 3 soft skills
+    - Most recent 3 roles (company, title, duration, key responsibilities)
+    - Education and certifications
+    - Industries worked in
+    - Recommended job titles to search for (3-5 titles based on the actual CV content)
+    - A one-paragraph candidate summary suitable for job searching
+  expected_output: >
+    A structured candidate profile containing: candidate name, seniority level,
+    years of experience, top skills list, industry background, 3-5 recommended
+    job search titles, and a short candidate summary paragraph. Format as
+    a clear markdown report with labelled sections.
+  agent: cv_analysis_specialist
+
+search_jobs:
+  description: >
+    Using the candidate profile from the CV analysis, search for open job
+    positions in {location} that match the recommended job titles and skills.
+
+    You MUST search across:
+    1. LinkedIn Jobs — use the job_search tool with platform-specific queries
+       like 'site:linkedin.com/jobs "TITLE" "{location}"'
+    2. Indeed — use queries like 'site:indeed.com "TITLE" "{location}"'
+    3. General web — use broader queries like '"TITLE" job opening "{location}"'
+
+    For each job found, capture: job title, company name, location,
+    application URL, posting date (if available), and a brief role description.
+
+    Search for at least 3 different job titles from the CV analysis.
+    Aim to find 10-15 unique listings total.
+  expected_output: >
+    A numbered list of 10-15 job listings, each containing:
+    - Job title
+    - Company name
+    - Location
+    - Platform (LinkedIn / Indeed / Web)
+    - Application URL
+    - Brief description (1-2 sentences)
+
+    Format as a structured markdown list.
+  agent: job_search_specialist
+  context:
+    - analyze_cv
+
+find_recruiter_contacts:
+  description: >
+    For the top 8-10 companies identified in the job search results,
+    find recruiter and HR contact information.
+
+    For each company, search for:
+    - The recruiter's or HR manager's name and LinkedIn profile URL
+    - Their email address (check LinkedIn, company website, Hunter.io style searches)
+    - The general HR/careers contact email if individual email is unavailable
+    - The company's careers page URL
+
+    Use search queries such as:
+    - '"COMPANY_NAME" recruiter "ROLE_TITLE" site:linkedin.com/in'
+    - '"COMPANY_NAME" talent acquisition email "ROLE_TITLE"'
+    - '"COMPANY_NAME" HR contact careers email'
+
+    If a direct email is not findable, note the LinkedIn profile URL and
+    suggest the most likely email pattern (e.g. firstname.lastname@company.com).
+  expected_output: >
+    A structured list of recruiter contacts, one per company, containing:
+    - Company name
+    - Recruiter/HR contact name (if found)
+    - Email address (or best-guess pattern)
+    - LinkedIn profile URL (if found)
+    - Company careers page URL
+
+    Format as a markdown table or structured list.
+  agent: recruiter_contact_finder
+  context:
+    - search_jobs
+
+generate_job_search_report:
+  description: >
+    Compile everything into a final, polished job search report for
+    {candidate_name} targeting roles in {location}.
+
+    The report must include:
+
+    1. **Candidate Summary** — brief profile from the CV analysis
+    2. **Top Job Opportunities** — ranked list of the best matching jobs,
+       each with: rank, job title, company, location, platform, match reason,
+       application URL, and recruiter contact (name + email or LinkedIn)
+    3. **Recruiter Contacts Summary** — a quick-reference table of all
+       recruiter emails/LinkedIn profiles found
+    4. **Application Tips** — 3-5 tailored tips based on the candidate's
+       specific profile and the roles found
+    5. **Next Steps** — a prioritised action list (apply to X first because...)
+
+    Sort jobs by best fit first (most relevant title + location match).
+  expected_output: >
+    A comprehensive, well-formatted markdown report with all 5 sections.
+    The report should be immediately actionable — the candidate should be
+    able to start applying within minutes of reading it.
+  agent: job_report_compiler
+  context:
+    - analyze_cv
+    - search_jobs
+    - find_recruiter_contacts
+  output_file: output/job_search_report.md
+  markdown: true

@@ -1,0 +1,14 @@
+.env
+.env.*
+!.env.example
+.venv
+__pycache__
+*.pyc
+*.pyo
+.git
+.gitignore
+output/
+tests/
+*.pdf
+*.md
+fly.toml

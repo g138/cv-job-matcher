@@ -1,0 +1,19 @@
+# Render deployment configuration
+# Docs: https://render.com/docs/render-yaml-spec
+
+services:
+  - type: web
+    name: cv-job-matcher
+    runtime: docker
+    dockerfilePath: ./Dockerfile
+    region: frankfurt          # closest to Ireland; options: oregon, ohio, virginia, frankfurt, singapore
+    plan: starter              # free tier — no credit card needed for first deploy
+    healthCheckPath: /health
+
+    envVars:
+      - key: GROQ_API_KEY
+        sync: false            # fill in Render dashboard — never commit real keys
+      - key: SERPER_API_KEY
+        sync: false
+      - key: PORT
+        value: "8000"

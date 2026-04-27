@@ -1,0 +1,34 @@
+[project]
+name = "cv_job_matching_system"
+version = "0.1.0"
+description = "cv_job_matching_system using crewAI"
+authors = [{ name = "Your Name", email = "you@example.com" }]
+requires-python = ">=3.10,<3.14"
+dependencies = [
+    "crewai[file-processing,litellm,tools]==1.13.0",
+    "crewai-tools>=0.38.0",
+    "requests>=2.31.0",
+    "fastapi>=0.115.0",
+    "uvicorn[standard]>=0.30.0",
+    "python-multipart>=0.0.9",
+    "gunicorn>=22.0.0",
+]
+
+[project.scripts]
+cv_job_matching_system = "cv_job_matching_system.main:run"
+run_crew = "cv_job_matching_system.main:run"
+train = "cv_job_matching_system.main:train"
+replay = "cv_job_matching_system.main:replay"
+test = "cv_job_matching_system.main:test"
+run_with_trigger = "cv_job_matching_system.main:run_with_trigger"
+serve = "cv_job_matching_system.api:serve"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.crewai]
+type = "crew"
+
+[tool.uv]
+override-dependencies = ["litellm<=1.82.6"]
