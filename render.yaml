@@ -15,5 +15,4 @@ services:
         sync: false            # fill in Render dashboard — never commit real keys
       - key: SERPER_API_KEY
         sync: false
-      - key: PORT
-        value: "8000"
+      # PORT is injected automatically by Render — do not set it here

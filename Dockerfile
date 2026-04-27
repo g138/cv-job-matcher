@@ -26,11 +26,5 @@ RUN mkdir -p output
 # Expose port
 EXPOSE 8000
 
-# Run with Gunicorn + Uvicorn workers
 # Render injects $PORT at runtime; default 8000 for local dev
-CMD ["sh", "-c", "uv run gunicorn cv_job_matching_system.api:app \
-     -k uvicorn.workers.UvicornWorker \
-     -w 2 \
-     -b 0.0.0.0:${PORT:-8000} \
-     --timeout 600 \
-     --graceful-timeout 30"]
+CMD ["sh", "-c", ".venv/bin/uvicorn cv_job_matching_system.api:app --host 0.0.0.0 --port ${PORT:-8000} --timeout-keep-alive 600"]
