@@ -5,741 +5,938 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>CV Job Matcher — AI-Powered Job Search</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --bg: #09090f;
-      --surface: #111118;
-      --card: #16161f;
-      --border: #1e1e2e;
-      --accent: #7c5cfc;
-      --accent2: #e040fb;
-      --green: #00e5a0;
-      --text: #e8e8f0;
-      --muted: #6b6b80;
-      --danger: #ff4f6e;
+      --white: #ffffff;
+      --bg: #f5f7fa;
+      --surface: #ffffff;
+      --border: #e2e8f0;
+      --border-hover: #cbd5e1;
+      --primary: #4f46e5;
+      --primary-dark: #3730a3;
+      --primary-light: #eef2ff;
+      --primary-mid: #c7d2fe;
+      --green: #059669;
+      --green-light: #ecfdf5;
+      --amber: #d97706;
+      --amber-light: #fffbeb;
+      --red: #dc2626;
+      --red-light: #fef2f2;
+      --text: #0f172a;
+      --text-2: #475569;
+      --text-3: #94a3b8;
+      --shadow-sm: 0 1px 3px rgba(0,0,0,0.07), 0 1px 2px rgba(0,0,0,0.05);
+      --shadow: 0 4px 6px -1px rgba(0,0,0,0.07), 0 2px 4px -1px rgba(0,0,0,0.05);
+      --shadow-lg: 0 10px 25px -5px rgba(0,0,0,0.08), 0 4px 10px -5px rgba(0,0,0,0.05);
+      --radius: 14px;
+      --radius-sm: 8px;
     }
 
-    html { scroll-behavior: smooth; }
-
     body {
-      font-family: 'DM Sans', sans-serif;
+      font-family: 'Inter', sans-serif;
       background: var(--bg);
       color: var(--text);
       min-height: 100vh;
-      overflow-x: hidden;
+      line-height: 1.5;
     }
 
-    /* ── Grid background ── */
-    body::before {
-      content: '';
-      position: fixed;
-      inset: 0;
-      background-image:
-        linear-gradient(rgba(124,92,252,0.04) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(124,92,252,0.04) 1px, transparent 1px);
-      background-size: 40px 40px;
-      pointer-events: none;
-      z-index: 0;
+    /* ── Nav ── */
+    nav {
+      background: var(--white);
+      border-bottom: 1px solid var(--border);
+      padding: 0 2rem;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: var(--shadow-sm);
     }
 
-    /* ── Glow orbs ── */
-    .orb {
-      position: fixed;
-      border-radius: 50%;
-      filter: blur(120px);
-      opacity: 0.18;
-      pointer-events: none;
-      z-index: 0;
-    }
-    .orb-1 { width: 600px; height: 600px; top: -200px; left: -150px; background: var(--accent); }
-    .orb-2 { width: 500px; height: 500px; bottom: -100px; right: -100px; background: var(--accent2); }
-
-    /* ── Layout ── */
-    .wrapper {
-      position: relative;
-      z-index: 1;
-      max-width: 900px;
-      margin: 0 auto;
-      padding: 2rem 1.5rem 6rem;
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 700;
+      font-size: 1.05rem;
+      color: var(--primary);
+      text-decoration: none;
     }
 
-    /* ── Header ── */
-    header {
+    .nav-logo-icon {
+      width: 30px; height: 30px;
+      background: var(--primary);
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      color: white;
+      font-size: 0.9rem;
+    }
+
+    .nav-badge {
+      font-size: 0.72rem;
+      background: var(--primary-light);
+      color: var(--primary);
+      border: 1px solid var(--primary-mid);
+      border-radius: 999px;
+      padding: 0.2rem 0.65rem;
+      font-weight: 500;
+    }
+
+    /* ── Hero ── */
+    .hero {
       text-align: center;
-      padding: 4rem 0 3rem;
+      padding: 4rem 1.5rem 2.5rem;
+      max-width: 680px;
+      margin: 0 auto;
     }
 
-    .badge {
+    .hero-eyebrow {
       display: inline-flex;
       align-items: center;
       gap: 0.4rem;
-      background: rgba(124,92,252,0.12);
-      border: 1px solid rgba(124,92,252,0.3);
+      background: var(--primary-light);
+      color: var(--primary);
+      border: 1px solid var(--primary-mid);
       border-radius: 999px;
       padding: 0.3rem 0.9rem;
-      font-size: 0.75rem;
-      font-weight: 500;
-      color: #a78bfa;
-      margin-bottom: 1.5rem;
-      letter-spacing: 0.05em;
+      font-size: 0.78rem;
+      font-weight: 600;
+      margin-bottom: 1.2rem;
+      letter-spacing: 0.04em;
       text-transform: uppercase;
     }
 
     h1 {
-      font-family: 'Syne', sans-serif;
-      font-size: clamp(2.2rem, 5vw, 3.8rem);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: clamp(2rem, 4.5vw, 3rem);
       font-weight: 800;
-      line-height: 1.1;
-      background: linear-gradient(135deg, #fff 30%, #a78bfa 70%, #e040fb 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
+      color: var(--text);
+      line-height: 1.15;
       margin-bottom: 1rem;
+      letter-spacing: -0.02em;
     }
 
-    .subtitle {
-      font-size: 1.1rem;
-      color: var(--muted);
-      max-width: 520px;
+    h1 span { color: var(--primary); }
+
+    .hero-sub {
+      font-size: 1.05rem;
+      color: var(--text-2);
+      max-width: 500px;
+      margin: 0 auto 2rem;
+      line-height: 1.65;
+    }
+
+    /* ── Stats strip ── */
+    .stats {
+      display: flex;
+      justify-content: center;
+      gap: 2.5rem;
+      margin-bottom: 3rem;
+      flex-wrap: wrap;
+    }
+
+    .stat { text-align: center; }
+    .stat-num {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 1.4rem;
+      font-weight: 800;
+      color: var(--primary);
+    }
+    .stat-label { font-size: 0.78rem; color: var(--text-3); font-weight: 500; }
+
+    /* ── Layout ── */
+    .main {
+      max-width: 860px;
       margin: 0 auto;
-      line-height: 1.6;
+      padding: 0 1.5rem 6rem;
     }
 
     /* ── Card ── */
     .card {
-      background: var(--card);
+      background: var(--white);
       border: 1px solid var(--border);
-      border-radius: 20px;
-      padding: 2.5rem;
-      margin-bottom: 2rem;
-      position: relative;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
       overflow: hidden;
-    }
-
-    .card::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0; right: 0;
-      height: 1px;
-      background: linear-gradient(90deg, transparent, rgba(124,92,252,0.5), transparent);
-    }
-
-    /* ── Steps pill ── */
-    .steps {
-      display: flex;
-      gap: 0.5rem;
-      margin-bottom: 2rem;
-      flex-wrap: wrap;
-    }
-
-    .step {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      padding: 0.4rem 0.9rem;
-      border-radius: 999px;
-      font-size: 0.8rem;
-      font-weight: 500;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      color: var(--muted);
-      transition: all 0.3s;
-    }
-
-    .step.active {
-      background: rgba(124,92,252,0.15);
-      border-color: rgba(124,92,252,0.4);
-      color: #a78bfa;
-    }
-
-    .step.done {
-      background: rgba(0,229,160,0.08);
-      border-color: rgba(0,229,160,0.3);
-      color: var(--green);
-    }
-
-    .step-num {
-      width: 18px; height: 18px;
-      border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 0.65rem;
-      font-weight: 700;
-      background: var(--border);
-      color: var(--muted);
-    }
-
-    .step.active .step-num { background: var(--accent); color: #fff; }
-    .step.done .step-num { background: var(--green); color: #000; }
-
-    /* ── Form ── */
-    .form-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1.2rem;
       margin-bottom: 1.5rem;
     }
 
-    @media (max-width: 600px) { .form-grid { grid-template-columns: 1fr; } }
+    .card-header {
+      padding: 1.5rem 2rem;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
 
-    .field { display: flex; flex-direction: column; gap: 0.5rem; }
+    .card-header-icon {
+      width: 36px; height: 36px;
+      border-radius: 10px;
+      background: var(--primary-light);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1rem;
+      flex-shrink: 0;
+    }
+
+    .card-header-title {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 700;
+      font-size: 1rem;
+      color: var(--text);
+    }
+
+    .card-header-sub {
+      font-size: 0.8rem;
+      color: var(--text-3);
+      margin-top: 0.1rem;
+    }
+
+    .card-body { padding: 1.75rem 2rem; }
+
+    /* ── Step progress ── */
+    .steps-bar {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      margin-bottom: 2rem;
+      padding: 1.2rem 2rem;
+      background: var(--bg);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .step-item {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      flex: 1;
+    }
+
+    .step-circle {
+      width: 28px; height: 28px;
+      border-radius: 50%;
+      border: 2px solid var(--border);
+      background: var(--white);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: var(--text-3);
+      flex-shrink: 0;
+      transition: all 0.3s;
+    }
+
+    .step-item.active .step-circle {
+      border-color: var(--primary);
+      background: var(--primary);
+      color: white;
+    }
+
+    .step-item.done .step-circle {
+      border-color: var(--green);
+      background: var(--green);
+      color: white;
+    }
+
+    .step-label {
+      font-size: 0.78rem;
+      font-weight: 500;
+      color: var(--text-3);
+      white-space: nowrap;
+    }
+
+    .step-item.active .step-label { color: var(--primary); font-weight: 600; }
+    .step-item.done .step-label { color: var(--green); }
+
+    .step-connector {
+      flex: 1;
+      height: 2px;
+      background: var(--border);
+      margin: 0 0.5rem;
+      transition: background 0.3s;
+    }
+
+    .step-connector.done { background: var(--green); }
+
+    @media (max-width: 560px) { .step-label { display: none; } }
+
+    /* ── Form ── */
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.2rem;
+      margin-bottom: 1.2rem;
+    }
+    @media (max-width: 560px) { .form-row { grid-template-columns: 1fr; } }
+
+    .field { display: flex; flex-direction: column; gap: 0.45rem; }
     .field.full { grid-column: 1 / -1; }
 
     label {
       font-size: 0.82rem;
-      font-weight: 500;
-      color: var(--muted);
-      letter-spacing: 0.03em;
-      text-transform: uppercase;
+      font-weight: 600;
+      color: var(--text);
     }
 
+    label span { color: var(--red); margin-left: 2px; }
+
     input[type="text"] {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 0.8rem 1rem;
+      background: var(--white);
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 0.7rem 1rem;
       color: var(--text);
       font-size: 0.95rem;
-      font-family: inherit;
+      font-family: 'Inter', sans-serif;
       transition: border-color 0.2s, box-shadow 0.2s;
       outline: none;
     }
 
     input[type="text"]:focus {
-      border-color: var(--accent);
-      box-shadow: 0 0 0 3px rgba(124,92,252,0.15);
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(79,70,229,0.12);
     }
 
-    input[type="text"]::placeholder { color: var(--muted); }
+    input[type="text"]::placeholder { color: var(--text-3); }
+
+    .field-hint {
+      font-size: 0.76rem;
+      color: var(--text-3);
+    }
 
     /* ── Drop zone ── */
     .dropzone {
       border: 2px dashed var(--border);
-      border-radius: 14px;
-      padding: 2.5rem;
+      border-radius: var(--radius-sm);
+      padding: 2rem;
       text-align: center;
       cursor: pointer;
-      transition: all 0.25s;
+      transition: all 0.2s;
+      background: var(--bg);
       position: relative;
-      background: var(--surface);
     }
 
     .dropzone:hover, .dropzone.dragover {
-      border-color: var(--accent);
-      background: rgba(124,92,252,0.06);
+      border-color: var(--primary);
+      background: var(--primary-light);
     }
 
-    .dropzone input { position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; }
-
-    .dropzone-icon {
-      font-size: 2.2rem;
-      margin-bottom: 0.8rem;
-      color: var(--muted);
+    .dropzone input {
+      position: absolute; inset: 0;
+      opacity: 0; cursor: pointer; width: 100%;
     }
 
-    .dropzone-text { font-size: 0.95rem; color: var(--muted); }
-    .dropzone-text strong { color: var(--accent); }
-    .dropzone-hint { font-size: 0.78rem; color: var(--muted); margin-top: 0.3rem; }
-    .dropzone-filename {
+    .dz-icon { font-size: 2rem; margin-bottom: 0.6rem; }
+    .dz-text { font-size: 0.9rem; color: var(--text-2); }
+    .dz-text strong { color: var(--primary); }
+    .dz-hint { font-size: 0.75rem; color: var(--text-3); margin-top: 0.25rem; }
+
+    .dz-file-chosen {
       margin-top: 0.8rem;
-      font-size: 0.85rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: var(--green-light);
       color: var(--green);
+      border: 1px solid #a7f3d0;
+      border-radius: 999px;
+      padding: 0.25rem 0.8rem;
+      font-size: 0.78rem;
+      font-weight: 600;
+      display: none;
+    }
+
+    /* ── Error box ── */
+    .error-box {
+      display: none;
+      background: var(--red-light);
+      border: 1px solid #fca5a5;
+      border-radius: var(--radius-sm);
+      padding: 0.8rem 1rem;
+      color: var(--red);
+      font-size: 0.85rem;
       font-weight: 500;
+      margin-bottom: 1.2rem;
+      display: none;
+      align-items: center;
+      gap: 0.5rem;
     }
 
     /* ── Button ── */
     .btn {
-      display: flex;
+      display: inline-flex;
       align-items: center;
       justify-content: center;
-      gap: 0.6rem;
-      width: 100%;
-      padding: 1rem 2rem;
-      border-radius: 12px;
+      gap: 0.5rem;
+      border-radius: var(--radius-sm);
       border: none;
-      font-family: 'Syne', sans-serif;
-      font-size: 1rem;
-      font-weight: 700;
+      font-family: 'Inter', sans-serif;
+      font-weight: 600;
       cursor: pointer;
-      transition: all 0.25s;
-      letter-spacing: 0.02em;
+      transition: all 0.2s;
+      text-decoration: none;
     }
 
     .btn-primary {
-      background: linear-gradient(135deg, var(--accent), var(--accent2));
-      color: #fff;
-      box-shadow: 0 4px 20px rgba(124,92,252,0.35);
+      width: 100%;
+      padding: 0.85rem 2rem;
+      font-size: 0.95rem;
+      background: var(--primary);
+      color: white;
+      box-shadow: 0 2px 8px rgba(79,70,229,0.3);
     }
 
     .btn-primary:hover:not(:disabled) {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 30px rgba(124,92,252,0.5);
+      background: var(--primary-dark);
+      box-shadow: 0 4px 14px rgba(79,70,229,0.4);
+      transform: translateY(-1px);
     }
 
-    .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+    .btn-primary:disabled { opacity: 0.55; cursor: not-allowed; transform: none; }
 
-    .btn-secondary {
-      background: var(--surface);
-      color: var(--text);
-      border: 1px solid var(--border);
+    .btn-sm {
+      padding: 0.5rem 1rem;
+      font-size: 0.82rem;
+      background: var(--white);
+      color: var(--text-2);
+      border: 1.5px solid var(--border);
     }
 
-    .btn-secondary:hover { border-color: var(--accent); color: var(--accent); }
+    .btn-sm:hover { border-color: var(--primary); color: var(--primary); }
 
-    /* ── Progress ── */
+    /* ── Progress card ── */
     #progress-section { display: none; }
 
-    .progress-card {
-      background: var(--card);
+    .progress-wrap {
+      background: var(--white);
       border: 1px solid var(--border);
-      border-radius: 20px;
-      padding: 2.5rem;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 3rem 2rem;
       text-align: center;
     }
 
-    .spinner {
-      width: 60px; height: 60px;
-      border: 3px solid var(--border);
-      border-top-color: var(--accent);
+    .progress-icon {
+      width: 72px; height: 72px;
+      background: var(--primary-light);
       border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
       margin: 0 auto 1.5rem;
-      animation: spin 0.9s linear infinite;
+      font-size: 1.8rem;
+      position: relative;
+    }
+
+    .spin-ring {
+      position: absolute; inset: -4px;
+      border-radius: 50%;
+      border: 3px solid transparent;
+      border-top-color: var(--primary);
+      animation: spin 1s linear infinite;
     }
 
     @keyframes spin { to { transform: rotate(360deg); } }
 
     .progress-title {
-      font-family: 'Syne', sans-serif;
-      font-size: 1.4rem;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 1.3rem;
       font-weight: 700;
-      margin-bottom: 0.5rem;
+      color: var(--text);
+      margin-bottom: 0.4rem;
     }
 
-    .progress-sub { color: var(--muted); font-size: 0.9rem; margin-bottom: 2rem; }
+    .progress-sub { font-size: 0.9rem; color: var(--text-2); margin-bottom: 2.5rem; }
 
-    .task-list { text-align: left; max-width: 400px; margin: 0 auto; }
+    .task-list {
+      max-width: 380px;
+      margin: 0 auto;
+      text-align: left;
+    }
 
-    .task-item {
+    .task-row {
       display: flex;
       align-items: center;
-      gap: 0.8rem;
-      padding: 0.6rem 0;
+      gap: 0.75rem;
+      padding: 0.75rem 0;
       border-bottom: 1px solid var(--border);
-      font-size: 0.9rem;
-      color: var(--muted);
+      font-size: 0.88rem;
+      color: var(--text-3);
       transition: color 0.3s;
     }
 
-    .task-item:last-child { border-bottom: none; }
-    .task-item.active { color: var(--text); }
-    .task-item.done { color: var(--green); }
+    .task-row:last-child { border-bottom: none; }
 
-    .task-icon { font-size: 1rem; width: 20px; text-align: center; }
+    .task-row.active { color: var(--text); font-weight: 500; }
+    .task-row.done { color: var(--green); }
 
-    /* ── Report section ── */
+    .task-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: var(--border);
+      flex-shrink: 0;
+      transition: background 0.3s;
+    }
+
+    .task-row.active .task-dot { background: var(--primary); box-shadow: 0 0 0 3px rgba(79,70,229,0.15); }
+    .task-row.done .task-dot { background: var(--green); }
+
+    /* ── Report ── */
     #report-section { display: none; }
 
-    .report-header {
+    .report-toolbar {
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 1rem;
       flex-wrap: wrap;
-      margin-bottom: 1.5rem;
+      padding: 1.25rem 2rem;
+      border-bottom: 1px solid var(--border);
     }
 
-    .report-title {
-      font-family: 'Syne', sans-serif;
-      font-size: 1.6rem;
+    .report-toolbar-title {
+      font-family: 'Plus Jakarta Sans', sans-serif;
       font-weight: 700;
+      font-size: 1rem;
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
     }
 
-    .report-actions { display: flex; gap: 0.6rem; }
+    .report-toolbar-title .badge-done {
+      font-size: 0.72rem;
+      background: var(--green-light);
+      color: var(--green);
+      border: 1px solid #a7f3d0;
+      border-radius: 999px;
+      padding: 0.15rem 0.6rem;
+      font-weight: 600;
+    }
+
+    .toolbar-actions { display: flex; gap: 0.6rem; }
 
     #report-body {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 14px;
       padding: 2rem;
-      max-height: 600px;
-      overflow-y: auto;
       font-size: 0.9rem;
-      line-height: 1.7;
+      line-height: 1.75;
+      color: var(--text);
+      max-height: 65vh;
+      overflow-y: auto;
     }
 
-    /* Markdown styles inside report */
+    /* Markdown inside report */
     #report-body h1, #report-body h2, #report-body h3 {
-      font-family: 'Syne', sans-serif;
-      margin: 1.2rem 0 0.5rem;
-      color: #fff;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 700;
+      color: var(--text);
+      margin: 1.5rem 0 0.5rem;
     }
 
-    #report-body h2 { font-size: 1.1rem; color: #a78bfa; border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
-    #report-body h3 { font-size: 1rem; }
+    #report-body h1 { font-size: 1.3rem; }
 
-    #report-body p { margin-bottom: 0.8rem; }
-    #report-body ul { padding-left: 1.5rem; margin-bottom: 0.8rem; }
+    #report-body h2 {
+      font-size: 1.05rem;
+      color: var(--primary);
+      padding-bottom: 0.4rem;
+      border-bottom: 2px solid var(--primary-light);
+    }
+
+    #report-body h3 { font-size: 0.95rem; }
+
+    #report-body p { margin-bottom: 0.75rem; }
+    #report-body ul, #report-body ol { padding-left: 1.5rem; margin-bottom: 0.75rem; }
     #report-body li { margin-bottom: 0.3rem; }
-
-    #report-body a { color: var(--accent); text-decoration: none; }
+    #report-body a { color: var(--primary); text-decoration: none; }
     #report-body a:hover { text-decoration: underline; }
+    #report-body strong { color: var(--text); font-weight: 600; }
 
     #report-body table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-bottom: 1rem;
-      font-size: 0.85rem;
+      width: 100%; border-collapse: collapse;
+      margin-bottom: 1rem; font-size: 0.85rem;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      overflow: hidden;
     }
 
     #report-body th {
-      background: rgba(124,92,252,0.1);
-      padding: 0.5rem 0.8rem;
+      background: var(--bg);
+      padding: 0.6rem 0.9rem;
       text-align: left;
-      color: #a78bfa;
-      font-family: 'Syne', sans-serif;
+      font-weight: 600;
+      color: var(--text);
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      border-bottom: 1px solid var(--border);
     }
 
     #report-body td {
-      padding: 0.5rem 0.8rem;
+      padding: 0.6rem 0.9rem;
       border-bottom: 1px solid var(--border);
-      color: var(--text);
     }
 
-    #report-body strong { color: #fff; }
-    #report-body code { background: var(--border); padding: 0.1rem 0.4rem; border-radius: 4px; font-size: 0.85em; }
+    #report-body tr:last-child td { border-bottom: none; }
+    #report-body tr:nth-child(even) td { background: #fafafa; }
 
-    /* ── Error ── */
-    .error-box {
-      background: rgba(255,79,110,0.08);
-      border: 1px solid rgba(255,79,110,0.3);
-      border-radius: 12px;
-      padding: 1rem 1.2rem;
-      color: #ff8fa3;
-      font-size: 0.9rem;
-      display: none;
-      margin-bottom: 1rem;
+    #report-body code {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      padding: 0.1rem 0.4rem;
+      border-radius: 4px;
+      font-size: 0.82em;
     }
 
-    /* ── Features strip ── */
+    #report-body blockquote {
+      border-left: 3px solid var(--primary-mid);
+      padding-left: 1rem;
+      color: var(--text-2);
+      margin: 0.75rem 0;
+    }
+
+    /* ── Features ── */
     .features {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 1rem;
+      margin-top: 1.5rem;
+    }
+
+    @media (max-width: 560px) { .features { grid-template-columns: 1fr; } }
+
+    .feature {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.25rem;
+      display: flex;
+      gap: 0.8rem;
+      align-items: flex-start;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .feature-icon-wrap {
+      width: 38px; height: 38px;
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem;
+      flex-shrink: 0;
+    }
+
+    .feature:nth-child(1) .feature-icon-wrap { background: #ede9fe; }
+    .feature:nth-child(2) .feature-icon-wrap { background: #dcfce7; }
+    .feature:nth-child(3) .feature-icon-wrap { background: #fef3c7; }
+
+    .feature-title { font-weight: 600; font-size: 0.85rem; margin-bottom: 0.2rem; }
+    .feature-desc { font-size: 0.78rem; color: var(--text-2); }
+
+    /* ── Footer ── */
+    footer {
+      text-align: center;
+      padding: 2rem;
+      font-size: 0.78rem;
+      color: var(--text-3);
+      border-top: 1px solid var(--border);
       margin-top: 2rem;
     }
 
-    @media (max-width: 600px) { .features { grid-template-columns: 1fr; } }
-
-    .feature {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 1.2rem;
-      text-align: center;
-    }
-
-    .feature-icon { font-size: 1.6rem; margin-bottom: 0.6rem; }
-    .feature-title { font-weight: 600; font-size: 0.9rem; margin-bottom: 0.3rem; }
-    .feature-desc { color: var(--muted); font-size: 0.8rem; }
-
     /* ── Scrollbar ── */
-    ::-webkit-scrollbar { width: 6px; }
-    ::-webkit-scrollbar-track { background: var(--surface); }
+    ::-webkit-scrollbar { width: 5px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
     ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
-    ::-webkit-scrollbar-thumb:hover { background: var(--muted); }
   </style>
 </head>
 <body>
-  <div class="orb orb-1"></div>
-  <div class="orb orb-2"></div>
 
-  <div class="wrapper">
-    <header>
-      <div class="badge"><i class="fas fa-bolt"></i> AI-Powered · Real Jobs · Real Recruiters</div>
-      <h1>Find Jobs That<br/>Match Your CV</h1>
-      <p class="subtitle">Upload your CV, choose a location — our AI searches LinkedIn, Indeed &amp; the web and finds recruiter contacts for you.</p>
-    </header>
+<!-- Nav -->
+<nav>
+  <a class="nav-logo" href="/">
+    Your Job Buddy
+  </a>
+  <span class="nav-badge">✦ Powered by AI</span>
+</nav>
 
-    <!-- ── Upload form ── -->
-    <div id="form-section">
-      <div class="card">
-        <div class="steps">
-          <div class="step active" id="step-1"><div class="step-num">1</div> Upload CV</div>
-          <div class="step" id="step-2"><div class="step-num">2</div> AI Analysis</div>
-          <div class="step" id="step-3"><div class="step-num">3</div> Job Search</div>
-          <div class="step" id="step-4"><div class="step-num">4</div> Report Ready</div>
+<!-- Hero -->
+<div class="hero">
+  <div class="hero-eyebrow">✦ LinkedIn · Indeed · Web</div>
+  <h1>Find Jobs That<br/><span>Match Your CV</span></h1>
+  <p class="hero-sub">Upload your CV, pick a location — our AI searches real job boards and finds recruiter contacts, so you can apply directly.</p>
+  <div class="stats">
+    <div class="stat"><div class="stat-num">3+</div><div class="stat-label">Job Boards</div></div>
+    <div class="stat"><div class="stat-num">10+</div><div class="stat-label">Listings Found</div></div>
+    <div class="stat"><div class="stat-num">100%</div><div class="stat-label">AI-Matched</div></div>
+  </div>
+</div>
+
+<div class="main">
+
+  <!-- ── Upload form ── -->
+  <div id="form-section">
+    <div class="card">
+
+      <!-- Step progress -->
+      <div class="steps-bar">
+        <div class="step-item active" id="step-1">
+          <div class="step-circle">1</div>
+          <div class="step-label">Upload CV</div>
+        </div>
+        <div class="step-connector" id="conn-1"></div>
+        <div class="step-item" id="step-2">
+          <div class="step-circle">2</div>
+          <div class="step-label">Analysis</div>
+        </div>
+        <div class="step-connector" id="conn-2"></div>
+        <div class="step-item" id="step-3">
+          <div class="step-circle">3</div>
+          <div class="step-label">Job Search</div>
+        </div>
+        <div class="step-connector" id="conn-3"></div>
+        <div class="step-item" id="step-4">
+          <div class="step-circle">4</div>
+          <div class="step-label">Report</div>
+        </div>
+      </div>
+
+      <div class="card-body">
+        <!-- Error -->
+        <div class="error-box" id="error-box">
+          <span>⚠</span> <span id="error-msg"></span>
         </div>
 
-        <div class="error-box" id="error-box"><i class="fas fa-exclamation-circle"></i> <span id="error-msg"></span></div>
+        <div class="form-row">
+          <div class="field">
+            <label>Full Name <span>*</span></label>
+            <input type="text" id="name" placeholder="e.g. Jane Doe" />
+            <div class="field-hint">As it appears on your CV</div>
+          </div>
+          <div class="field">
+            <label>Job Location <span>*</span></label>
+            <input type="text" id="location" placeholder="e.g. Dublin, Ireland" />
+            <div class="field-hint">City, country or "Remote"</div>
+          </div>
+        </div>
 
-        <div class="form-grid">
-          <div class="field">
-            <label>Full Name</label>
-            <input type="text" id="name" placeholder="Jane Doe" required />
-          </div>
-          <div class="field">
-            <label>Job Location</label>
-            <input type="text" id="location" placeholder="Dublin, Ireland" required />
-          </div>
-          <div class="field full">
-            <label>Your CV</label>
-            <div class="dropzone" id="dropzone">
-              <input type="file" id="cv-file" accept=".pdf,.txt,.doc,.docx" />
-              <div class="dropzone-icon"><i class="fas fa-cloud-upload-alt"></i></div>
-              <div class="dropzone-text"><strong>Click to upload</strong> or drag &amp; drop</div>
-              <div class="dropzone-hint">PDF or plain text · Max 5 MB</div>
-              <div class="dropzone-filename" id="filename-display"></div>
-            </div>
+        <div class="field full" style="margin-bottom:1.5rem">
+          <label>Your CV <span>*</span></label>
+          <div class="dropzone" id="dropzone">
+            <input type="file" id="cv-file" accept=".pdf,.txt" />
+            <div class="dz-icon">📄</div>
+            <div class="dz-text"><strong>Click to upload</strong> or drag &amp; drop your CV</div>
+            <div class="dz-hint">PDF or plain text · Max 5 MB</div>
+            <div class="dz-file-chosen" id="file-chosen">✓ <span id="file-name"></span></div>
           </div>
         </div>
 
         <button class="btn btn-primary" id="search-btn" onclick="startSearch()">
-          <i class="fas fa-search"></i> Search Jobs
+          Find My Perfect Job
         </button>
-      </div>
-
-      <div class="features">
-        <div class="feature">
-          <div class="feature-icon">🔗</div>
-          <div class="feature-title">LinkedIn &amp; Indeed</div>
-          <div class="feature-desc">Real listings from top job boards</div>
-        </div>
-        <div class="feature">
-          <div class="feature-icon">📧</div>
-          <div class="feature-title">Recruiter Emails</div>
-          <div class="feature-desc">Direct HR contacts per company</div>
-        </div>
-        <div class="feature">
-          <div class="feature-icon">🤖</div>
-          <div class="feature-title">AI Match Score</div>
-          <div class="feature-desc">Ranked by relevance to your profile</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- ── Progress ── -->
-    <div id="progress-section">
-      <div class="progress-card">
-        <div class="spinner"></div>
-        <div class="progress-title">Searching for your perfect roles…</div>
-        <div class="progress-sub" id="progress-sub">Analysing your CV</div>
-        <div class="task-list">
-          <div class="task-item active" id="t1"><span class="task-icon">🧠</span> Analysing CV &amp; extracting skills</div>
-          <div class="task-item" id="t2"><span class="task-icon">🔍</span> Searching LinkedIn Jobs &amp; Indeed</div>
-          <div class="task-item" id="t3"><span class="task-icon">📨</span> Finding recruiter contacts</div>
-          <div class="task-item" id="t4"><span class="task-icon">📋</span> Compiling final report</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- ── Report ── -->
-    <div id="report-section">
-      <div class="card">
-        <div class="report-header">
-          <div class="report-title">Your Job Search Report</div>
-          <div class="report-actions">
-            <button class="btn btn-secondary" onclick="downloadReport()" style="width:auto;padding:0.6rem 1.2rem;font-size:0.85rem;">
-              <i class="fas fa-download"></i> Download
-            </button>
-            <button class="btn btn-secondary" onclick="resetForm()" style="width:auto;padding:0.6rem 1.2rem;font-size:0.85rem;">
-              <i class="fas fa-redo"></i> New Search
-            </button>
-          </div>
-        </div>
-        <div id="report-body"></div>
       </div>
     </div>
   </div>
 
-  <!-- marked.js for markdown rendering -->
-  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-  <script>
-    let currentJobId = null;
-    let pollInterval = null;
-    let reportMarkdown = '';
-    let taskStep = 0;
+  <!-- ── Progress ── -->
+  <div id="progress-section">
+    <div class="progress-wrap">
+      <div class="progress-icon">
+        <div class="spin-ring"></div>
+        🤖
+      </div>
+      <div class="progress-title">Searching for your perfect roles…</div>
+      <div class="progress-sub">This takes 2–4 minutes. Please keep this tab open.</div>
+      <div class="task-list">
+        <div class="task-row active" id="t1">
+          <div class="task-dot"></div> Reading &amp; analysing your CV
+        </div>
+        <div class="task-row" id="t2">
+          <div class="task-dot"></div> Searching LinkedIn Jobs &amp; Indeed
+        </div>
+        <div class="task-row" id="t3">
+          <div class="task-dot"></div> Finding recruiter email contacts
+        </div>
+        <div class="task-row" id="t4">
+          <div class="task-dot"></div> Compiling your personalised report
+        </div>
+      </div>
+    </div>
+  </div>
 
-    const taskItems = ['t1','t2','t3','t4'];
-    const taskDurations = [15000, 40000, 25000, 15000]; // approximate ms each task takes
+  <!-- ── Report ── -->
+  <div id="report-section">
+    <div class="card">
+      <div class="report-toolbar">
+        <div class="report-toolbar-title">
+          📋 Your Job Search Report
+          <span class="badge-done">✓ Complete</span>
+        </div>
+        <div class="toolbar-actions">
+          <button class="btn btn-sm" onclick="downloadReport()">⬇ Download .md</button>
+          <button class="btn btn-sm" onclick="resetForm()">↺ New Search</button>
+        </div>
+      </div>
+      <div id="report-body"></div>
+    </div>
+  </div>
 
-    // ── Drag & drop ──
-    const dropzone = document.getElementById('dropzone');
-    const fileInput = document.getElementById('cv-file');
-    const filenameDisplay = document.getElementById('filename-display');
+</div><!-- /main -->
 
-    dropzone.addEventListener('dragover', e => { e.preventDefault(); dropzone.classList.add('dragover'); });
-    dropzone.addEventListener('dragleave', () => dropzone.classList.remove('dragover'));
-    dropzone.addEventListener('drop', e => {
-      e.preventDefault();
-      dropzone.classList.remove('dragover');
-      if (e.dataTransfer.files[0]) {
-        fileInput.files = e.dataTransfer.files;
-        filenameDisplay.textContent = '✓ ' + e.dataTransfer.files[0].name;
-      }
-    });
+<footer>
+  Your Job Buddy · AI-powered · Built with CrewAI, Groq &amp; Serper
+</footer>
 
-    fileInput.addEventListener('change', () => {
-      if (fileInput.files[0]) filenameDisplay.textContent = '✓ ' + fileInput.files[0].name;
-    });
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<script>
+  let jobId = null;
+  let pollTimer = null;
+  let reportMd = '';
+  let taskStep = 0;
+  const taskIds = ['t1','t2','t3','t4'];
+  const taskDelay = [12000, 45000, 30000, 15000];
 
-    // ── Show error ──
-    function showError(msg) {
-      const box = document.getElementById('error-box');
-      document.getElementById('error-msg').textContent = msg;
-      box.style.display = 'block';
+  // ── Drop zone ──
+  const dropzone = document.getElementById('dropzone');
+  const fileInput = document.getElementById('cv-file');
+  const fileChosen = document.getElementById('file-chosen');
+  const fileName = document.getElementById('file-name');
+
+  dropzone.addEventListener('dragover', e => { e.preventDefault(); dropzone.classList.add('dragover'); });
+  dropzone.addEventListener('dragleave', () => dropzone.classList.remove('dragover'));
+  dropzone.addEventListener('drop', e => {
+    e.preventDefault();
+    dropzone.classList.remove('dragover');
+    if (e.dataTransfer.files[0]) setFile(e.dataTransfer.files[0]);
+  });
+  fileInput.addEventListener('change', () => { if (fileInput.files[0]) setFile(fileInput.files[0]); });
+
+  function setFile(f) {
+    fileName.textContent = f.name;
+    fileChosen.style.display = 'inline-flex';
+  }
+
+  // ── Error ──
+  function showError(msg) {
+    const b = document.getElementById('error-box');
+    document.getElementById('error-msg').textContent = msg;
+    b.style.display = 'flex';
+  }
+  function hideError() { document.getElementById('error-box').style.display = 'none'; }
+
+  // ── Steps ──
+  function setStep(n) {
+    for (let i = 1; i <= 4; i++) {
+      const el = document.getElementById('step-' + i);
+      el.classList.remove('active', 'done');
+      if (i < n) { el.classList.add('done'); el.querySelector('.step-circle').textContent = '✓'; }
+      if (i === n) el.classList.add('active');
+      const conn = document.getElementById('conn-' + i);
+      if (conn) conn.classList.toggle('done', i < n);
     }
+  }
 
-    function hideError() {
-      document.getElementById('error-box').style.display = 'none';
+  // ── Fake task advance ──
+  function advanceTask() {
+    if (taskStep >= taskIds.length) return;
+    document.getElementById(taskIds[taskStep]).classList.add('active');
+    setTimeout(() => {
+      document.getElementById(taskIds[taskStep]).classList.remove('active');
+      document.getElementById(taskIds[taskStep]).classList.add('done');
+      taskStep++;
+      if (taskStep < taskIds.length) advanceTask();
+    }, taskDelay[taskStep]);
+  }
+
+  // ── Start search ──
+  async function startSearch() {
+    hideError();
+    const name = document.getElementById('name').value.trim();
+    const loc  = document.getElementById('location').value.trim();
+    const file = fileInput.files[0];
+
+    if (!name) { showError('Please enter your full name.'); return; }
+    if (!loc)  { showError('Please enter your preferred job location.'); return; }
+    if (!file) { showError('Please upload your CV file (PDF or text).'); return; }
+
+    document.getElementById('search-btn').disabled = true;
+
+    const fd = new FormData();
+    fd.append('candidate_name', name);
+    fd.append('location', loc);
+    fd.append('cv_file', file);
+
+    try {
+      const res = await fetch('/search', { method: 'POST', body: fd });
+      const data = await res.json();
+      if (!res.ok) { showError(data.detail || 'Server error. Please try again.'); document.getElementById('search-btn').disabled = false; return; }
+
+      jobId = data.job_id;
+      document.getElementById('form-section').style.display = 'none';
+      document.getElementById('progress-section').style.display = 'block';
+      setStep(2);
+      taskStep = 0;
+      advanceTask();
+      pollTimer = setInterval(pollStatus, 5000);
+    } catch (e) {
+      showError('Network error: ' + e.message);
+      document.getElementById('search-btn').disabled = false;
     }
+  }
 
-    // ── Step pills ──
-    function setStep(n) {
-      for (let i = 1; i <= 4; i++) {
-        const el = document.getElementById('step-' + i);
-        el.classList.remove('active', 'done');
-        if (i < n) el.classList.add('done');
-        if (i === n) el.classList.add('active');
-      }
-    }
-
-    // ── Fake task progress while waiting ──
-    function advanceTaskProgress() {
-      if (taskStep >= taskItems.length) return;
-      const current = document.getElementById(taskItems[taskStep]);
-      if (current) current.classList.add('active');
-
-      setTimeout(() => {
-        if (current) { current.classList.remove('active'); current.classList.add('done'); }
-        taskStep++;
-        advanceTaskProgress();
-      }, taskDurations[taskStep] || 20000);
-    }
-
-    // ── Start search ──
-    async function startSearch() {
-      hideError();
-      const name = document.getElementById('name').value.trim();
-      const location = document.getElementById('location').value.trim();
-      const file = fileInput.files[0];
-
-      if (!name) { showError('Please enter your full name.'); return; }
-      if (!location) { showError('Please enter a job location.'); return; }
-      if (!file) { showError('Please upload your CV file.'); return; }
-
-      document.getElementById('search-btn').disabled = true;
-
-      const formData = new FormData();
-      formData.append('candidate_name', name);
-      formData.append('location', location);
-      formData.append('cv_file', file);
-
-      try {
-        const res = await fetch('/search', { method: 'POST', body: formData });
-        const data = await res.json();
-
-        if (!res.ok) {
-          showError(data.detail || 'Server error. Please try again.');
-          document.getElementById('search-btn').disabled = false;
-          return;
-        }
-
-        currentJobId = data.job_id;
-
-        // Switch to progress view
-        document.getElementById('form-section').style.display = 'none';
-        document.getElementById('progress-section').style.display = 'block';
-        setStep(2);
-        taskStep = 0;
-        advanceTaskProgress();
-
-        // Poll for completion
-        pollInterval = setInterval(pollStatus, 4000);
-
-      } catch (err) {
-        showError('Network error: ' + err.message);
-        document.getElementById('search-btn').disabled = false;
-      }
-    }
-
-    // ── Poll status ──
-    async function pollStatus() {
-      try {
-        const res = await fetch('/status/' + currentJobId);
-        const data = await res.json();
-
-        if (data.status === 'done') {
-          clearInterval(pollInterval);
-          fetchReport();
-        } else if (data.status === 'error') {
-          clearInterval(pollInterval);
-          document.getElementById('progress-section').style.display = 'none';
-          document.getElementById('form-section').style.display = 'block';
-          document.getElementById('search-btn').disabled = false;
-          showError('Job search failed: ' + (data.error || 'Unknown error. Please try again.'));
-        }
-      } catch (err) {
-        // Network blip — keep polling
-      }
-    }
-
-    // ── Fetch & show report ──
-    async function fetchReport() {
-      try {
-        const res = await fetch('/report/' + currentJobId);
-        const data = await res.json();
-        reportMarkdown = data.report_markdown || '';
-
-        // Mark all tasks done
-        taskItems.forEach(id => {
-          const el = document.getElementById(id);
-          el.classList.remove('active');
-          el.classList.add('done');
-        });
-
-        setTimeout(() => {
-          document.getElementById('progress-section').style.display = 'none';
-          document.getElementById('report-section').style.display = 'block';
-          setStep(4);
-          document.getElementById('report-body').innerHTML = marked.parse(reportMarkdown);
-        }, 600);
-
-      } catch (err) {
+  // ── Poll ──
+  async function pollStatus() {
+    try {
+      const res = await fetch('/status/' + jobId);
+      const data = await res.json();
+      if (data.status === 'done') { clearInterval(pollTimer); fetchReport(); }
+      else if (data.status === 'error') {
+        clearInterval(pollTimer);
         document.getElementById('progress-section').style.display = 'none';
         document.getElementById('form-section').style.display = 'block';
         document.getElementById('search-btn').disabled = false;
-        showError('Could not fetch report: ' + err.message);
+        showError('Search failed: ' + (data.error || 'Unknown error.'));
       }
-    }
+    } catch (_) {}
+  }
 
-    // ── Download ──
-    function downloadReport() {
-      const blob = new Blob([reportMarkdown], { type: 'text/markdown' });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = 'job_search_report.md';
-      a.click();
-      URL.revokeObjectURL(url);
-    }
+  // ── Fetch report ──
+  async function fetchReport() {
+    const res = await fetch('/report/' + jobId);
+    const data = await res.json();
+    reportMd = data.report_markdown || '';
+    taskIds.forEach(id => {
+      document.getElementById(id).classList.remove('active');
+      document.getElementById(id).classList.add('done');
+    });
+    setTimeout(() => {
+      document.getElementById('progress-section').style.display = 'none';
+      document.getElementById('report-section').style.display = 'block';
+      setStep(4);
+      document.getElementById('report-body').innerHTML = marked.parse(reportMd);
+    }, 500);
+  }
 
-    // ── Reset ──
-    function resetForm() {
-      document.getElementById('report-section').style.display = 'none';
-      document.getElementById('form-section').style.display = 'block';
-      document.getElementById('search-btn').disabled = false;
-      document.getElementById('name').value = '';
-      document.getElementById('location').value = '';
-      fileInput.value = '';
-      filenameDisplay.textContent = '';
-      setStep(1);
-      currentJobId = null;
-      reportMarkdown = '';
-      hideError();
-    }
-  </script>
+  // ── Download ──
+  function downloadReport() {
+    const blob = new Blob([reportMd], { type: 'text/markdown' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'job_search_report.md';
+    a.click();
+  }
+
+  // ── Reset ──
+  function resetForm() {
+    document.getElementById('report-section').style.display = 'none';
+    document.getElementById('form-section').style.display = 'block';
+    document.getElementById('search-btn').disabled = false;
+    document.getElementById('name').value = '';
+    document.getElementById('location').value = '';
+    fileInput.value = '';
+    fileChosen.style.display = 'none';
+    setStep(1);
+    jobId = null; reportMd = '';
+    hideError();
+  }
+</script>
 </body>
 </html>
